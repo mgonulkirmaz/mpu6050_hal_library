@@ -87,7 +87,7 @@ uint8_t MPU6050_Init(I2C_HandleTypeDef *I2Cx, uint8_t fs_sel, uint8_t afs_sel) {
 void MPU6050_Calibrate(I2C_HandleTypeDef *I2Cx, MPU6050_t *mpu) {
 	float sum[6] = { 0, 0, 0, 0, 0, 0 };
 
-	for (int i = 0; i < MPU6050_CALIBRATION_CNT; i++) {
+	for (int i = 1; i < MPU6050_CALIBRATION_CNT; i++) {
 		MPU6050_Read(I2Cx, mpu);
 
 		if (i > MPU6050_CALIBRATION_CNT - (MPU6050_CALIBRATION_CNT - 100)) {
@@ -101,12 +101,12 @@ void MPU6050_Calibrate(I2C_HandleTypeDef *I2Cx, MPU6050_t *mpu) {
 		HAL_Delay(2);
 	}
 
-	mpu->Accel_X_Offset = sum[0] / MPU6050_CALIBRATION_CNT;
-	mpu->Accel_Y_Offset = sum[1] / MPU6050_CALIBRATION_CNT;
-	mpu->Accel_Z_Offset = sum[2] / MPU6050_CALIBRATION_CNT;
-	mpu->Gyro_X_Offset = sum[3] / MPU6050_CALIBRATION_CNT;
-	mpu->Gyro_Y_Offset = sum[4] / MPU6050_CALIBRATION_CNT;
-	mpu->Gyro_Z_Offset = sum[5] / MPU6050_CALIBRATION_CNT;
+	mpu->Accel_X_Offset = sum[0] / (MPU6050_CALIBRATION_CNT - 100);
+	mpu->Accel_Y_Offset = sum[1] / (MPU6050_CALIBRATION_CNT - 100);
+	mpu->Accel_Z_Offset = sum[2] / (MPU6050_CALIBRATION_CNT - 100);
+	mpu->Gyro_X_Offset = sum[3] / (MPU6050_CALIBRATION_CNT - 100);
+	mpu->Gyro_Y_Offset = sum[4] / (MPU6050_CALIBRATION_CNT - 100);
+	mpu->Gyro_Z_Offset = sum[5] / (MPU6050_CALIBRATION_CNT - 100);
 
 }
 void MPU6050_ReadAccel(I2C_HandleTypeDef *I2Cx, MPU6050_t *mpu) {
