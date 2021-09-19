@@ -8,6 +8,10 @@
 #ifndef INC_MPU6050_H_
 #define INC_MPU6050_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // INCLUDES
 #include <stdint.h>
 
@@ -16,7 +20,7 @@
 // DEFINES
 
 #ifndef MPU6050_ADDR
-#define MPU6050_ADDR (0x68 << 1)
+#define MPU6050_ADDR 0x68
 #endif
 
 #define MPU6050_CALIBRATION_CNT 1000
@@ -230,5 +234,9 @@ void MPU6050_Read(I2C_HandleTypeDef *I2Cx, MPU6050_t *mpu);
 void MPU6050_ConvertRawValues(MPU6050_t *mpu);
 void MPU6050_ZeroAll(MPU6050_t *mpu);
 void MPU6050_ComplementaryFilter(MPU6050_t *mpu, uint32_t delta_t_us);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* INC_MPU6050_H_ */
